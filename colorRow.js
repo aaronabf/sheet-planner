@@ -1,40 +1,46 @@
-function colorRow(r)
-{
+// Colors the row ranging from columns 1 to 7
+function colorRow(r) {
   var dataRange = SpreadsheetApp.getActiveSheet().getRange(r, 1, 1, 7);
-
   var row = dataRange.getValues()[0];
 
-  if(row[3] === "x"){
-    dataRange.setBackgroundColor("red");
-  }
-  else if(row[3] === "?"){
-    dataRange.setBackgroundColor("yellow");
-  }
-  else if(row[3] === "e"){
-    dataRange.setBackgroundRGB(0, 255, 0);
-  }
-  else if(row[3] === "o"){
-    dataRange.setBackgroundRGB(77, 77, 77);
-  }
-  else if(row[3] === "xx"){
-    dataRange.setBackgroundColor("blue");
-    dataRange.setFontColor("white");
-  }
-  else if(row[3] === "xxx"){
-    dataRange.setBackgroundColor("black");
-    dataRange.setFontColor("white");
-  }
-  else if(row[2] === 2 || row[2] === 1){
-    dataRange.setBackgroundColor("red");
-  }
-  else{
-    dataRange.setBackgroundColor("white");
-    dataRange.setFontColor("black");
+  switch(row[3]) {
+    case "x":
+      dataRange.setBackgroundColor("red");
+      dataRange.setFontColor("black");
+      break;
+    case "?":
+      dataRange.setBackgroundColor("yellow");
+      dataRange.setFontColor("black");
+      break;
+    case "e":
+      dataRange.setBackgroundRGB(0, 255, 0);
+      dataRange.setFontColor("black");
+      break;
+    case "o":
+      dataRange.setBackgroundRGB(77, 77, 77);
+      dataRange.setFontColor("black");
+      break;
+    case "xx":
+      dataRange.setBackgroundColor("blue");
+      dataRange.setFontColor("white");
+      break;
+    case "xxx":
+      dataRange.setBackgroundColor("black");
+      dataRange.setFontColor("white");
+      break;
+    default:
+      if (row[2] === 2 || row[2] === 1)
+        dataRange.setBackgroundColor("red");
+      else
+        dataRange.setBackgroundColor("white");
+
+      dataRange.setFontColor("black");
+      break;
   }
 }
 
-function formatEntireSheet()
-{
+// Runs colorRow on every row of the sheet (aside from the header)
+function formatEntireSheet() {
   var startRow = 2;
   var endRow = SpreadsheetApp.getActiveSheet().getMaxRows()-1;
 
@@ -42,10 +48,10 @@ function formatEntireSheet()
     colorRow(r);
 }
 
-function onEdit(event)
-{
-  // We want to colorRow on the edited row for
-  // speed, and then run the entire sheet
+// Formats sheet on edit
+function onEdit(event) {
+  // Runs colorRow on the edited row first (for speed),
+  // then formats the entire sheet
   colorRow(event.source.getActiveRange().getRowIndex());
   SpreadsheetApp.flush();
 
@@ -53,8 +59,8 @@ function onEdit(event)
   SpreadsheetApp.flush();
 }
 
-function onOpen()
-{
+// Formats sheet on load
+function onOpen() {
   formatEntireSheet();
   SpreadsheetApp.flush();
 }
