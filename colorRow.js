@@ -38,9 +38,8 @@ function formatEntireSheet()
   var startRow = 2;
   var endRow = SpreadsheetApp.getActiveSheet().getMaxRows()-1;
 
-  for (var r = startRow; r <= endRow; r++){
+  for (var r = startRow; r <= endRow; r++)
     colorRow(r);
-  }
 }
 
 function onEdit(event)
@@ -48,7 +47,10 @@ function onEdit(event)
   // We want to colorRow on the edited row for
   // speed, and then run the entire sheet
   colorRow(event.source.getActiveRange().getRowIndex());
+  SpreadsheetApp.flush();
+
   formatEntireSheet();
+  SpreadsheetApp.flush();
 }
 
 function onOpen()
