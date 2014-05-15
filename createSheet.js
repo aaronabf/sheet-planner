@@ -25,7 +25,7 @@ function createSheet() {
   sheet.setFrozenColumns(1);
 
   // Sets heights and width for each row and column, respectively
-  for (var r = 1; r < maxRow; r++)
+  for (var r = 1; r < fixRow; r++)
     sheet.setRowHeight(r, 22);
 
   sheet.setColumnWidth(1, 80);
