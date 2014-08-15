@@ -51,6 +51,10 @@ function formatEntireSheet() {
 // Formats sheet on edit; runs colorRow on the edited row first (so the
 // use can see the change quickly), then formats the entire sheet
 function onEdit(event) {
+  // Only run the script on the first sheet in the spreadsheet
+  if (event.source.getActiveSheet().getIndex() !== 1)
+    return;
+
   colorRow(event.source.getActiveRange().getRowIndex());
   SpreadsheetApp.flush();
 
